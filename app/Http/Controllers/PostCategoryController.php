@@ -20,7 +20,10 @@ class PostCategoryController extends Controller
      */
     public function create()
     {
-        //
+          
+        $categories = PostCategory::all();
+        return view('createCategory', compact('categories'));
+    
     }
 
     /**
@@ -28,7 +31,16 @@ class PostCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         // dd($request);
+        $request->validate([
+            'categoryName' => 'required|string|unique:post_categories',
+        ]);
+
+        PostCategory::create([
+            'categoryName' => $request->categoryName,
+        ]);
+
+        return redirect()->route('category.show')->with('success', 'Category added successfully!');
     }
 
     /**

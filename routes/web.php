@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostCategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,3 +17,12 @@ Route::post('/userlogin', [UserController::class, 'login'])->name('loginuser');
 
 Route::post('/logout', [UserController::class, 'logout'])
     ->name('logout');
+
+
+Route::middleware('auth')->group(function () {
+
+    Route::get(('/category/show'), [PostCategoryController::class, 'create'])->name('category.show');
+    Route::post(('/category/store'),[PostCategoryController::class, 'store'])->name('category.store');
+
+    
+});
